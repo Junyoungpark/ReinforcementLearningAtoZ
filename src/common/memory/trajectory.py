@@ -32,7 +32,7 @@ class Trajectory:
         returns = list()
 
         g = 0
-        # iterating returns in inverse order
+        # iterating returns in reverse order
         for r in rewards[::-1]:
             g = r + self.gamma * g
             returns.insert(0, g)
