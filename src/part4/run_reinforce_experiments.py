@@ -1,15 +1,12 @@
+# append root directory "ReinforcementLearningAtoZ" to the python path
+# This is an extremely bad practice. Usually, you can put this file to the root of project.
+import os, sys
+
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))))
+
 import argparse
 from src.part4.reinforcement_experiments import run_batch_episode_exp
-
-
-def str2bool(v):
-    if v.lower() in ('yes', 'true', 't', 'y', '1'):
-        return True
-    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
-        return False
-    else:
-        raise argparse.ArgumentTypeError('Boolean value expected.')
-
+from src.common.miscellaneous import str2bool
 
 if __name__ == '__main__':
 
@@ -18,6 +15,8 @@ if __name__ == '__main__':
     parser.add_argument('--n_eps', type=int, default=10000, help='Number of episodes')
     parser.add_argument('--use_norm', type=str2bool, const=True, default='True',
                         nargs='?', help='use return normalization')
+    parser.add_argument('--wandb_project', type=str, default='reinforce_exp', help='WANDB project name')
+    parser.add_argument('--wandb_group', type=str, default='episodic update', help='WANDB run group')
 
     args = parser.parse_args()
     update_intervals = [1, 2, 4, 8]
@@ -31,4 +30,7 @@ if __name__ == '__main__':
 
     for update_interval in update_intervals:
         for i in range(args.n_reps):
-            run_batch_episode_exp(args.n_eps, update_interval, use_norm=args.use_norm)
+            run_batch_episode_exp(args.n_eps, update_interval,
+                                  use_norm=args.use_norm,
+                                  wandb_project=args.wandb_project,
+                                  wandb_group=args.wandb_group)

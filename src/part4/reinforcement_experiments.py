@@ -1,16 +1,13 @@
-import sys;
-
-sys.path.append('..')  # add project root to the python path
 from os.path import join
 
 import wandb
 import gym
 import torch
 
-from src.part3.MLP import MultiLayerPerceptron as MLP
-from src.part4.PolicyGradient import REINFORCE
-from src.common.train_utils import to_tensor
-from src.common.memory.episodic_memory import EpisodicMemory
+from ..part3.MLP import MultiLayerPerceptron as MLP
+from ..part4.PolicyGradient import REINFORCE
+from ..common.train_utils import to_tensor
+from ..common.memory.episodic_memory import EpisodicMemory
 
 
 def run_exp(total_eps,
@@ -79,7 +76,9 @@ def run_exp(total_eps,
 
 def run_batch_episode_exp(total_eps: int,
                           update_every: int,
-                          use_norm: bool):
+                          use_norm: bool,
+                          wandb_project: str,
+                          wandb_group: str):
     # NOTE:
     # This code doesn't run properly on Windows 10.
     # The result can be reproduced on Ubuntu and Mac OS.
@@ -88,10 +87,10 @@ def run_batch_episode_exp(total_eps: int,
     config['update_every'] = update_every
     config['use_norm'] = use_norm
 
-    wandb.init(project='reinforce_exp',
+    wandb.init(project=wandb_project,
                entity='junyoung-park',
                reinit=True,
-               group='episodic update',
+               group=wandb_group,
                config=config)
 
     env = gym.make('CartPole-v1')
