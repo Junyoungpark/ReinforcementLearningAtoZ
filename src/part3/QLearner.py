@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import numpy as np
 
 
 class NaiveDQN(nn.Module):
@@ -61,7 +62,7 @@ if __name__ == '__main__':
 
     import gym
     from src.part3.MLP import MultiLayerPerceptron as MLP
-    import numpy as np
+
 
     class EMAMeter:
 
