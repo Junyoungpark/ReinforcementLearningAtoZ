@@ -12,7 +12,6 @@ from src.common.train_utils import to_tensor
 
 def run_DQN(target_update_interval: int,
             wandb_project: str):
-
     # the hyperparameters are drawn from ""
     lr = 1e-4 * 5
     batch_size = 16
@@ -90,3 +89,12 @@ def run_DQN(target_update_interval: int,
 
     torch.save(agent.state_dict(), join(wandb.run.dir, "agent.pt"))
     wandb.join()
+
+
+if __name__ == '__main__':
+    wandb_project = 'DQN'
+    target_update_interval = 5
+
+    for i in range(10):
+        run_DQN(wandb_project=wandb_project,
+                target_update_interval=target_update_interval)
