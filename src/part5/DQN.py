@@ -97,8 +97,7 @@ if __name__ == '__main__':
 
     qnet = MLP(4, 2, num_neurons=[128, 128])
     qnet_target = MLP(4, 2, num_neurons=[128, 128])
-
-    hard_update(qnet, qnet_target)
+    qnet_target.load_state_dict(qnet.state_dict())
 
     agent = DQN(4, 1, qnet=qnet, qnet_target=qnet_target, lr=lr, gamma=.98, epsilon=1.0)
 
@@ -136,6 +135,7 @@ if __name__ == '__main__':
 
         if n_epi % target_update_interval == 0:
             qnet_target.load_state_dict(qnet.state_dict())
+
 
         if n_epi % 100 == 0:
             print("{} : {}".format(n_epi, cum_r))
