@@ -1,6 +1,6 @@
+import torch
 import numpy as np
 import torch.nn as nn
-from src.common.target_update import hard_update
 
 
 class DQN(nn.Module):
@@ -117,7 +117,7 @@ if __name__ == '__main__':
 
             experience = (s,
                           torch.tensor(a).view(1, 1),
-                          torch.tensor(r/100.0).view(1, 1),
+                          torch.tensor(r / 100.0).view(1, 1),
                           torch.tensor(ns).view(1, 4),
                           torch.tensor(done).view(1, 1))
             memory.push(experience)
@@ -135,7 +135,6 @@ if __name__ == '__main__':
 
         if n_epi % target_update_interval == 0:
             qnet_target.load_state_dict(qnet.state_dict())
-
 
         if n_epi % 100 == 0:
             print("{} : {}".format(n_epi, cum_r))
