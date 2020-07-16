@@ -62,7 +62,7 @@ class DQN(nn.Module):
         self.opt.step()
 
 
-def prepare_training_inputs(sampled_exps):
+def prepare_training_inputs(sampled_exps, device='cpu'):
     states = []
     actions = []
     rewards = []
@@ -75,9 +75,9 @@ def prepare_training_inputs(sampled_exps):
         next_states.append(sampled_exp[3])
         dones.append(sampled_exp[4])
 
-    states = torch.cat(states, dim=0).float()
-    actions = torch.cat(actions, dim=0)
-    rewards = torch.cat(rewards, dim=0).float()
-    next_states = torch.cat(next_states, dim=0).float()
-    dones = torch.cat(dones, dim=0).float()
+    states = torch.cat(states, dim=0).float().to(device)
+    actions = torch.cat(actions, dim=0).to(device)
+    rewards = torch.cat(rewards, dim=0).float().to(device)
+    next_states = torch.cat(next_states, dim=0).float().to(device)
+    dones = torch.cat(dones, dim=0).float().to(device)
     return states, actions, rewards, next_states, dones
