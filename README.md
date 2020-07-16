@@ -26,7 +26,8 @@ numpy, gym, pandas, pytorch, matplotlib, jupyter
 > `PART2` <파트2. 가치기반 강화학습> 실습코드 <br>
 > `PART3` <파트3. 함수근사 기법> 실습코드 <br>
 > `PART4` <파트4. 정책 최적화> 실습코드 <br>
-> `PART5` <파트5. 심층 강화학습> 실습코드 :construction: <br>
+> `PART5` <파트5. 심층 강화학습> 실습코드 <br>
+> `PART5` <파트6. 모델 기반 강화학습> 실습코드 :construction: <br>
 
 ### 기타
 > `lecture_material` 수업에 사용된 이미지를 생성하는 코드 / 노트북
