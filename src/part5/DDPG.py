@@ -109,7 +109,7 @@ class DDPG(nn.Module):
 
         # compute critic loss and update the critic parameters
         with torch.no_grad():
-            critic_target = r + self.gamma * self.critic_target(ns, self.actor_target(ns)) #* (1 - done)
+            critic_target = r + self.gamma * self.critic_target(ns, self.actor_target(ns)) * (1 - done)
         critic_loss = self.criteria(self.critic(s, a), critic_target)
 
         self.critic_opt.zero_grad()
