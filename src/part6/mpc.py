@@ -99,7 +99,7 @@ class MPC:
         xs = []
         x = x0
 
-        # us = us.view(self.H, self.action_dim)
+        # us : [time stamps x action_dim]
         for u in us.split(1, dim=0):  # iterating over time stamps
             x = self.model(x, u)
             xs.append(x)
@@ -171,10 +171,9 @@ class MPC:
         us = torch.from_numpy(us).float()
         us = us.view(self.H, self.action_dim)
 
-        def _hes(us): return self.compute_objective(x0=self.x0, us=us, x_ref=self.x_ref)
+        def _jac(us): return self.compute_objective(x0=self.x0, us=us, x_ref=self.x_ref)
 
-        jac = torch.autograd.functional.jacobian(_hes, us)
-        jac = torch.clamp(jac, -10, 10).numpy()
+        jac = torch.autograd.functional.jacobian(_jac, us)
         return jac
 
     def solve(self, u0=None):
