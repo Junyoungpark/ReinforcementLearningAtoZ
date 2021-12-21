@@ -88,7 +88,7 @@ class TensorDP:
 
         # Compute Q_pi(s,a) from V_pi(s)
         r_pi = self.get_r_pi(policy)
-        q_pi = r_pi + self.P.dot(v_pi)  # q_pi = [num.action x num states]
+        q_pi = r_pi + self.gamma * self.P.dot(v_pi)  # q_pi = [num.action x num states]
 
         # Greedy improvement
         policy_improved = np.zeros_like(policy)
