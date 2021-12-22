@@ -125,7 +125,7 @@ class AsyncDP:
         while True:
             # compute the Bellman errors
             # bellman_errors shape : [num.states]
-            bellman_errors = value - (self.R.T + self.P.dot(value)).max(axis=0)
+            bellman_errors = value - (self.R.T + self.gamma * self.P.dot(value)).max(axis=0)
             state_indices = range(self.ns)
 
             # put the (bellman error, state index) into the priority queue
