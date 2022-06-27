@@ -1,8 +1,10 @@
 import io
-import numpy as np
 import sys
-from gym.envs.toy_text import discrete
 from copy import deepcopy as dc
+
+import numpy as np
+
+from src.common.discrete_env import DiscreteEnv
 
 UP = 0
 RIGHT = 1
@@ -10,7 +12,7 @@ DOWN = 2
 LEFT = 3
 
 
-class GridworldEnv(discrete.DiscreteEnv):
+class GridworldEnv(DiscreteEnv):
     """
     Grid World environment from Sutton's Reinforcement Learning book chapter 4.
     You are an agent on an MxN grid and your goal is to reach the terminal
@@ -51,7 +53,9 @@ class GridworldEnv(discrete.DiscreteEnv):
             # P[s][a] = (prob, next_state, reward, is_done)
             P[s] = {a: [] for a in range(nA)}
 
-            def is_done(s): return s == 0 or s == (nS - 1)
+            def is_done(s):
+                return s == 0 or s == (nS - 1)
+
             reward = 0.0 if is_done(s) else -1.0
 
             # We're stuck in a terminal state
@@ -91,10 +95,10 @@ class GridworldEnv(discrete.DiscreteEnv):
                 self.R_tensor[s, a] = r
 
         super(GridworldEnv, self).__init__(nS, nA, P, isd)
-    
+
     def observe(self):
         return dc(self.s)
-    
+
     def _render(self, mode='human', close=False):
         """ Renders the current gridworld layout
          For example, a 4x4 grid with the mode="human" looks like:
